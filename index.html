@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta http-equiv="refresh" content="5">
+</head>
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="./js/mypromise.js"></script>
+	<script type="text/javascript">
+		var text_ok = "", text_fail = "";
+		var App =  document.getElementById('app');
+		function test(){
+			return new Promise(function (resolve, reject){
+				setTimeout(function (){
+                  	if((Math.floor(Math.random() * 10) & 1) == 1){
+                  		resolve("dongsheng")
+                  	}else{
+                  		reject("dataError")
+                  	}
+				}, 2000)
+			});
+		}
+
+		function start(){
+			var P = test();
+			P.then(function (data){
+				text_ok +=  "成功回调,附带参数是: "+data+"<br>";
+				App.innerHTML = text_ok;
+			}, function (data){
+				App.innerHTML = new Error("失败回调,参数： "+data+"<br><br><br>");
+			}).done(function (){
+				text_ok += "成功回调第二个handler<br><br><br>";
+				App.innerHTML = text_ok;
+			})
+		}
+		start();
+	</script>
+</body>
+</html>
